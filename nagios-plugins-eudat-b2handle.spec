@@ -1,5 +1,5 @@
 Name:		nagios-plugins-eudat-b2handle
-Version:	0.8
+Version:	0.9
 Release:	1%{?dist}
 Summary:	Nagios B2HANDLE probes
 License:	GPLv3+
@@ -56,6 +56,8 @@ install -m 644 check_handle_api.py %{buildroot}%{_libexecdir}/argo-monitoring/pr
 pip install b2handle
 
 %changelog
+* Thu Sep 03 2020 Kyriakos Gkinis <kyrginis@admin.grnet.gr> - 0.9-1
+- Catch SSLError exception and exit with code CRITICAL
 * Wed Apr 17 2019 Kyriakos Gkinis <kyrginis@admin.grnet.gr> - 0.8-1
 - Add python2-pip dependency
 - Add preinstall command to pip install b2handle library
