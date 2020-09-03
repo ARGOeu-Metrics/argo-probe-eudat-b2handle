@@ -7,6 +7,7 @@ import traceback
 from b2handle.clientcredentials import PIDClientCredentials
 from b2handle.handleclient import EUDATHandleClient
 from b2handle.handleexceptions import *
+from requests.exceptions import SSLError
 
 import signal
 
@@ -93,11 +94,17 @@ if __name__ == '__main__':
         delete_result = client.delete_handle(handle)
         print "OK: Delete handle successful."
         
-    except (GenericHandleError, CredentialsFormatError, HandleSyntaxError, HandleNotFoundException, HandleAuthenticationError) as e:
-        print "CRITICAL: " + e.msg
+    except (GenericHandleError, CredentialsFormatError, HandleSyntaxError, HandleNotFoundException, HandleAuthenticationError, SSLError) as e:
+        if param.debug :
+            print "CRITICAL: " + traceback.format_exc()
+        else :
+            print "CRITICAL: " + str(e)
         sys.exit(2)
     except Exception as e:
-        print "UNKNOWN: " + traceback.format_exc()
+        if param.debug :
+            print "UNKNOWN: " + traceback.format_exc()
+        else:
+            print "UNKNOWN: " + str(e)
         sys.exit(3)
     
 
