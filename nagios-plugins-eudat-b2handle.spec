@@ -1,6 +1,6 @@
 Name:		nagios-plugins-eudat-b2handle
 Version:	0.9
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Nagios B2HANDLE probes
 License:	GPLv3+
 Packager:	Kyriakos Gkinis <kyrginis@admin.grnet.gr>
@@ -19,7 +19,9 @@ Requires:	perl-JSON
 Requires:	python-defusedxml
 Requires:	python-httplib2
 
-Requires:	python2-pip
+%if "%{?dist}" == ".el7"
+Requires: python2-pip
+%endif
 
 %description
 Nagios probes to check functionality of Handle service and EPIC API
@@ -53,9 +55,13 @@ install -m 644 check_handle_api.py %{buildroot}%{_libexecdir}/argo-monitoring/pr
 %attr(0755,root,root) /%{_sysconfdir}/nagios/plugins/eudat-b2handle
 
 %pre
+%if "%{?dist}" == ".el7"
 pip install b2handle
+%endif
 
 %changelog
+* Mon Sep 07 2020 Kyriakos Gkinis <kyrginis@admin.grnet.gr> - 0.9-2
+- Include python2-pip dependency and b2handle library preinstall command only in el7 RPMs
 * Thu Sep 03 2020 Kyriakos Gkinis <kyrginis@admin.grnet.gr> - 0.9-1
 - Catch SSLError exception and exit with code CRITICAL
 * Wed Apr 17 2019 Kyriakos Gkinis <kyrginis@admin.grnet.gr> - 0.8-1
