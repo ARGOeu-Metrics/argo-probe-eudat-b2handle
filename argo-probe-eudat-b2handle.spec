@@ -43,7 +43,6 @@ install -m 644 check_handle_api.py %{buildroot}%{_libexecdir}/argo/probes/eudat-
 %dir /%{_libexecdir}/argo
 %dir /%{_libexecdir}/argo/probes/
 %dir /%{_libexecdir}/argo/probes/eudat-b2handle
-%dir /%{_sysconfdir}/nagios/plugins/eudat-b2handle
 
 %attr(0755,root,root) /%{_libexecdir}/argo/probes/eudat-b2handle/check_handle_resolution.pl
 %attr(0755,root,root) /%{_libexecdir}/argo/probes/eudat-b2handle/check_epic_api.py
@@ -51,7 +50,6 @@ install -m 644 check_handle_api.py %{buildroot}%{_libexecdir}/argo/probes/eudat-
 %attr(0644,root,root) /%{_libexecdir}/argo/probes/eudat-b2handle/epicclient.pyc
 %attr(0644,root,root) /%{_libexecdir}/argo/probes/eudat-b2handle/epicclient.pyo
 %attr(0755,root,root) /%{_libexecdir}/argo/probes/eudat-b2handle/check_handle_api.py
-%attr(0755,root,root) /%{_sysconfdir}/nagios/plugins/eudat-b2handle
 
 %pre
 
