@@ -1,7 +1,7 @@
-Name:		nagios-plugins-eudat-b2handle
+Name:		argo-probe-eudat-b2handle
 Version:	0.9
-Release:	3%{?dist}
-Summary:	Nagios B2HANDLE probes
+Release:	4%{?dist}
+Summary:	Monitoring Metrics for B2HANDLE 
 License:	GPLv3+
 Packager:	Kyriakos Gkinis <kyrginis@admin.grnet.gr>
 
@@ -24,7 +24,7 @@ Requires:	b2handle
 %endif
 
 %description
-Nagios probes to check functionality of Handle service and EPIC API
+Monitoring metrics to check functionality of Handle service and EPIC API
 
 %prep
 %setup -q
@@ -33,30 +33,32 @@ Nagios probes to check functionality of Handle service and EPIC API
 
 %install
 
-install -d %{buildroot}/%{_libexecdir}/argo-monitoring/probes/eudat-b2handle
-install -d %{buildroot}/%{_sysconfdir}/nagios/plugins/eudat-b2handle
-install -m 755 check_handle_resolution.pl %{buildroot}/%{_libexecdir}/argo-monitoring/probes/eudat-b2handle/check_handle_resolution.pl
-install -m 755 check_epic_api.py %{buildroot}/%{_libexecdir}/argo-monitoring/probes/eudat-b2handle/check_epic_api.py
-install -m 644 epicclient.py %{buildroot}%{_libexecdir}/argo-monitoring/probes/eudat-b2handle/epicclient.py
-install -m 644 check_handle_api.py %{buildroot}%{_libexecdir}/argo-monitoring/probes/eudat-b2handle/check_handle_api.py
+install -d %{buildroot}/%{_libexecdir}/argo/probes/eudat-b2handle
+install -m 755 check_handle_resolution.pl %{buildroot}/%{_libexecdir}/argo/probes/eudat-b2handle/check_handle_resolution.pl
+install -m 755 check_epic_api.py %{buildroot}/%{_libexecdir}/argo/probes/eudat-b2handle/check_epic_api.py
+install -m 644 epicclient.py %{buildroot}%{_libexecdir}/argo/probes/eudat-b2handle/epicclient.py
+install -m 644 check_handle_api.py %{buildroot}%{_libexecdir}/argo/probes/eudat-b2handle/check_handle_api.py
 
 %files
-%dir /%{_libexecdir}/argo-monitoring
-%dir /%{_libexecdir}/argo-monitoring/probes/
-%dir /%{_libexecdir}/argo-monitoring/probes/eudat-b2handle
+%dir /%{_libexecdir}/argo
+%dir /%{_libexecdir}/argo/probes/
+%dir /%{_libexecdir}/argo/probes/eudat-b2handle
 %dir /%{_sysconfdir}/nagios/plugins/eudat-b2handle
 
-%attr(0755,root,root) /%{_libexecdir}/argo-monitoring/probes/eudat-b2handle/check_handle_resolution.pl
-%attr(0755,root,root) /%{_libexecdir}/argo-monitoring/probes/eudat-b2handle/check_epic_api.py
-%attr(0755,root,root) /%{_libexecdir}/argo-monitoring/probes/eudat-b2handle/epicclient.py
-%attr(0644,root,root) /%{_libexecdir}/argo-monitoring/probes/eudat-b2handle/epicclient.pyc
-%attr(0644,root,root) /%{_libexecdir}/argo-monitoring/probes/eudat-b2handle/epicclient.pyo
-%attr(0755,root,root) /%{_libexecdir}/argo-monitoring/probes/eudat-b2handle/check_handle_api.py
+%attr(0755,root,root) /%{_libexecdir}/argo/probes/eudat-b2handle/check_handle_resolution.pl
+%attr(0755,root,root) /%{_libexecdir}/argo/probes/eudat-b2handle/check_epic_api.py
+%attr(0755,root,root) /%{_libexecdir}/argo/probes/eudat-b2handle/epicclient.py
+%attr(0644,root,root) /%{_libexecdir}/argo/probes/eudat-b2handle/epicclient.pyc
+%attr(0644,root,root) /%{_libexecdir}/argo/probes/eudat-b2handle/epicclient.pyo
+%attr(0755,root,root) /%{_libexecdir}/argo/probes/eudat-b2handle/check_handle_api.py
 %attr(0755,root,root) /%{_sysconfdir}/nagios/plugins/eudat-b2handle
 
 %pre
 
 %changelog
+* Mon Mar 14 2022 Themis Zamani <themiszamani@gmail.com> - 0.9-4
+- Update package prerequisites based on argo monitoring. 
+  
 * Wed Mar 24 2021 Kyriakos Gkinis <kyrginis@admin.grnet.gr> - 0.9-3
 - Add dependency on b2handle rpm, remove pip preinstall command
 
