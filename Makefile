@@ -1,11 +1,8 @@
-PKGNAME=nagios-plugins-eudat-b2handle
+PKGNAME=argo-probe-eudat-b2handle
 SPECFILE=${PKGNAME}.spec
 FILES=check_epic_api.py epicclient.py check_handle_resolution.pl check_handle_api.py ${SPECFILE}
 
 PKGVERSION=$(shell grep -s '^Version:' $(SPECFILE) | sed -e 's/Version:\s*//')
-
-srpm: dist
-	rpmbuild -ts --define='dist .el6' ${PKGNAME}-${PKGVERSION}.tar.gz
 
 rpm: dist
 	rpmbuild -ta ${PKGNAME}-${PKGVERSION}.tar.gz
