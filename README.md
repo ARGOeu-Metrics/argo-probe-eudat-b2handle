@@ -1,4 +1,4 @@
-# nagios-plugins-eudat-b2handles
+# argo-probe-eudat-b2handles
 Two nagios probes are available, `check_epic_api.py` and `check_handle_resolution.pl`.
 
 ## check_epic_api.py
