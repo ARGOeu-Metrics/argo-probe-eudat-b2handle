@@ -1,45 +1,11 @@
 # argo-probe-eudat-b2handles
-Two nagios probes are available, `check_epic_api.py` and `check_handle_resolution.pl`.
-
-## check_epic_api.py
-
-This plugin is a simple CRUD test of the EPIC API service on the specified host and the specified prefix. It creates a handle named NAGIOS-{DATE}-{TIME}, and then tries to read it and update it with a new value, and finally tries to delete it.
-
-It imports the `epicclient` module.
-
-### Required options:
-
-`--username, -U <user>` : The username used to authenticate with the EPIC service
-
-`--url, -u <uri>` : The base URI of the EPIC API service to be tested
-
-`--pass, -P <key>` : The API key of the username
-
-`--prefix, -p <prefix>` : The prefix to be tested
-
-
-### Optional options
-
-`--debug, -d` : Debug mode
-
-`--help, -h` : Print a help message and exit
-
-`--timeout, -t <timeout>` : Timeout, in seconds
-
-### Example:
-```
-check_epic_api.py \
-
-	--url "https://epic.domain.com/api/v2/handles/" --prefix 12345 \
-
-	--username nagios --pass deadbabe --debug
-```
+Three nagios probes are available: `check_handle_api.py`, `check_handle_resolution.pl` and optionally `check_epic_api.py`.
 
 ## check_handle_api.py
 
 This plugin is a simple CRUD test of the Handle v8 JSON REST API service on the specified host and the specified prefix. It creates a handle named NAGIOS-{DATE}-{TIME}, and then tries to read it and update it with a new value, and finally tries to delete it.
 
-It uses the b2handle library (http://eudat-b2safe.github.io/B2HANDLE/handleclient.html#).
+It uses the PyHandle library (https://github.com/EUDAT-B2HANDLE/PYHANDLE).
 
 ### Required option:
 
@@ -94,31 +60,63 @@ check_handle_resolution.pl --prefix 12345 --debug
 check_handle_resolution.pl --prefix 12345 --suffix MY_HANDLE --debug --timeout 10
 ```
 
-## Makefile
-`make srpm` : Builds a source RPM package compatible with Red Hat Enterprise Linux 6.
+## check_epic_api.py
 
-`make rpm` : Builds a binary RPM package compatible with Red Hat Enterprise Linux 6.
+This plugin is a simple CRUD test of the EPIC API service on the specified host and the specified prefix. It creates a handle named NAGIOS-{DATE}-{TIME}, and then tries to read it and update it with a new value, and finally tries to delete it.
+
+It imports the `epicclient` module.
+
+### Required options:
+
+`--username, -U <user>` : The username used to authenticate with the EPIC service
+
+`--url, -u <uri>` : The base URI of the EPIC API service to be tested
+
+`--pass, -P <key>` : The API key of the username
+
+`--prefix, -p <prefix>` : The prefix to be tested
+
+
+### Optional options
+
+`--debug, -d` : Debug mode
+
+`--help, -h` : Print a help message and exit
+
+`--timeout, -t <timeout>` : Timeout, in seconds
+
+### Example:
+```
+check_epic_api.py \
+
+	--url "https://epic.domain.com/api/v2/handles/" --prefix 12345 \
+
+	--username nagios --pass deadbabe --debug
+```
+
+## Makefile
+`make srpm` : Builds a source RPM package compatible with Red Hat Enterprise Linux 9.
+
+`make rpm` : Builds a binary RPM package compatible with Red Hat Enterprise Linux 9.
+
+`make rpm_with_epic` : Builds a binary RPM package that includes the check_epic_api.py probe and is compatible with Red Hat Enterprise Linux 9.
 
 ## Dependencies
 
 The following dependencies are automatically installed by rpm :
 
-### check_epic_api.py dependencies
+### check_handle_api_py dependencies
 
 OS repository:
 
 ```
-python
-python-argparse
-python-lxml
-python-simplejson
+python3
 ```
 
-EPEL repository:
+ARGO repository:
 
 ```
-python-defusedxml
-python-httplib2
+pyhandle
 ```
 
 ### check_handle_resolution.pl dependencies
@@ -126,6 +124,24 @@ python-httplib2
 OS repository:
 
 ```
-perl
+perl-interprater
 perl-JSON
 ```
+
+### check_epic_api.py dependencies
+
+OS repository:
+
+```
+python3
+python3-lxml
+```
+
+EPEL repository:
+
+```
+python3-defusedxml
+python3-httplib2
+python3-simplejson
+```
+
