@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 
 # Copyright (c) 2014, EUDAT project funded from the European Union under grant agreement n.283304.
@@ -102,7 +102,7 @@ class EpicClient(object):
         """Internal: Print a debug message if debug is enabled."""
 
         if self.debug:
-            print "[", method, "]", msg
+            print("[", method, "]", msg)
 
     def _geturi(self, prefix, key, value, suffix=''):
         """
@@ -124,23 +124,22 @@ class EpicClient(object):
             build Header for HTTP-Request
         """
         hdrs = None
-        auth = base64.encodestring(self.cred.username + ":" +
-                                   self.cred.password)
-        if action is "SEARCH":
+        auth = base64.b64encode((self.cred.username + ":" + self.cred.password).encode()).decode()
+        if action == "SEARCH":
             if self.cred.accept_format:
                 hdrs = {'Accept': self.cred.accept_format,
                         'Authorization': 'Basic ' + auth}
-        elif action is "READ":
+        elif action == "READ":
             if self.cred.accept_format:
                 hdrs = {'Accept': self.cred.accept_format,
                         'Authorization': 'Basic ' + auth}
-        elif action is "CREATE":
+        elif action == "CREATE":
             hdrs = {'If-None-Match': '*', 'Content-Type': 'application/json',
                     'Authorization': 'Basic ' + auth}
-        elif action is "UPDATE":
+        elif action == "UPDATE":
             hdrs = {'Content-Type': 'application/json',
                     'Authorization': 'Basic ' + auth}
-        elif action is "DELETE":
+        elif action == "DELETE":
             hdrs = {'Authorization': 'Basic ' + auth}
         else:
             self._debugmsg(str(action), "ACTION is unknown")
@@ -181,13 +180,13 @@ class EpicClient(object):
                 self._debugmsg("checkresponsecode", ".....")
                 self._debugmsg(str(method), item["info"]+" "+str(statuscode))
                 output = item["output"]
-                if output is "None":
+                if output == "None":
                     return None
-                elif output is "False":
+                elif output == "False":
                     return False
                 else:
                     return True
-        print "Processing fails with statuscode = " + str(statuscode)
+        print("Processing fails with statuscode = " + str(statuscode))
         return None
 
 
@@ -374,7 +373,7 @@ class EpicClient(object):
 
         keyfound = False
 
-        if (value is None) or (value is '') or (value is ""):
+        if (value is None) or (value == '') or (value == ""):
             for item in handle:
                 if 'type' in item and item['type'] == key:
                     self._debugmsg('modifyHandle', 'Remove item ' + key)
@@ -421,7 +420,7 @@ class EpicClient(object):
         """
 
         uri = self._geturi(prefix, '', '', suffix)
-        if not key or key is "":
+        if not key or key == "":
             hdrs = self._getheader("DELETE")
             self._debugmsg('deleteHandle', "DELETE Handle " + prefix + "/"
                            + suffix + " of URI " + uri)
@@ -615,7 +614,7 @@ class LocationType(object):
         """Internal: Print a debug message if debug is enabled."""
 
         if self.debug:
-            print "[", method, "]", msg
+            print("[", method, "]", msg)
 
     def isEmpty(self):
         """Check if the 10320/LOC handle type field is empty.
@@ -783,8 +782,7 @@ class Credentials(object):
             try:
                 filehandle = open(self.filename, "r")
             except IOError as err:
-                print "error: failed to open %s: %s" % (self.filename,
-                                                        err.strerror)
+                print("error: failed to open %s: %s" % (self.filename, err.strerror))
                 sys.exit(-1)
 
             with filehandle:
@@ -802,21 +800,21 @@ class Credentials(object):
                 if tmp['debug'] == 'True':
                     self.debug = True
             except KeyError:
-                print "error: missing key-value-pair in credentials file"
+                print("error: missing key-value-pair in credentials file")
                 sys.exit(-1)
 
         elif self.store == "irods":
-            print "Function getting credential store in iRODS is in testing ..."
+            print("Function getting credential store in iRODS is in testing ...")
             # FIXME: is there better way to exit ?.
             sys.exit(-1)
         else:
-            print "error: invalid store '%s', aborting" % self.store
+            print("error: invalid store '%s', aborting" % self.store)
             sys.exit(-1)
 
         if self.debug:
-            print ("credentials from %s:%s %s %s %s" %
+            print(("credentials from %s:%s %s %s %s" %
                    (self.store, self.baseuri, self.username, self.prefix,
-                    self.accept_format))
+                    self.accept_format)))
 
 
 ###############################################################################

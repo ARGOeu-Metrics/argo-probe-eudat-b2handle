@@ -4,8 +4,17 @@ FILES=check_epic_api.py epicclient.py check_handle_resolution.pl check_handle_ap
 
 PKGVERSION=$(shell grep -s '^Version:' $(SPECFILE) | sed -e 's/Version:\s*//')
 
+srpm: dist
+	rpmbuild -ts ${PKGNAME}-${PKGVERSION}.tar.gz
+	rm ${PKGNAME}-${PKGVERSION}.tar.gz
+
 rpm: dist
 	rpmbuild -ta ${PKGNAME}-${PKGVERSION}.tar.gz
+	rm ${PKGNAME}-${PKGVERSION}.tar.gz
+
+rpm_with_epic: dist
+	rpmbuild -ta ${PKGNAME}-${PKGVERSION}.tar.gz --with epicapi 
+	rm ${PKGNAME}-${PKGVERSION}.tar.gz
 
 dist:
 	rm -rf dist
