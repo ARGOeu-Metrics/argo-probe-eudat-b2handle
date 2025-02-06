@@ -1,6 +1,6 @@
 Name:		argo-probe-eudat-b2handle
 Version:	1.0
-Release:	0%{?dist}
+Release:	1%{?dist}
 Summary:	Monitoring Metrics for B2HANDLE 
 License:	GPLv3+
 Packager:	Kyriakos Gkinis <kyrginis@admin.grnet.gr>
@@ -10,7 +10,7 @@ BuildArch:	noarch
 BuildRoot:	%{_tmppath}/%{name}-%{version}
 
 Requires:	python3
-Requires:	pyhandle
+Requires:	python3dist(pyhandle)
 Requires:	perl-interpreter
 Requires:	perl-JSON
 
