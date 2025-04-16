@@ -1,6 +1,6 @@
 Name:		argo-probe-eudat-b2handle
-Version:	0.9
-Release:	4%{?dist}
+Version:	1.0
+Release:	1%{?dist}
 Summary:	Monitoring Metrics for B2HANDLE 
 License:	GPLv3+
 Packager:	Kyriakos Gkinis <kyrginis@admin.grnet.gr>
@@ -9,18 +9,20 @@ Source:		%{name}-%{version}.tar.gz
 BuildArch:	noarch
 BuildRoot:	%{_tmppath}/%{name}-%{version}
 
-Requires:	python
-Requires:	python-argparse
-Requires:	python-lxml
-Requires:	python-simplejson
-Requires:	perl
+Requires:	python3
+Requires:	python3dist(pyhandle)
+Requires:	perl-interpreter
 Requires:	perl-JSON
 
-Requires:	python-defusedxml
-Requires:	python-httplib2
+# Create an option to build with epic api probe, default is without
+%bcond_with epicapi
 
-%if "%{?dist}" == ".el7"
-Requires:	b2handle
+%if %{with epicapi}
+BuildRequires:	python3-devel
+Requires:	python3-lxml
+Requires:	python3-defusedxml
+Requires:	python3-httplib2
+Requires:	python3-simplejson
 %endif
 
 %description
@@ -35,9 +37,12 @@ Monitoring metrics to check functionality of Handle service and EPIC API
 
 install -d %{buildroot}/%{_libexecdir}/argo/probes/eudat-b2handle
 install -m 755 check_handle_resolution.pl %{buildroot}/%{_libexecdir}/argo/probes/eudat-b2handle/check_handle_resolution.pl
+install -m 644 check_handle_api.py %{buildroot}%{_libexecdir}/argo/probes/eudat-b2handle/check_handle_api.py
+%if %{with epicapi}
 install -m 755 check_epic_api.py %{buildroot}/%{_libexecdir}/argo/probes/eudat-b2handle/check_epic_api.py
 install -m 644 epicclient.py %{buildroot}%{_libexecdir}/argo/probes/eudat-b2handle/epicclient.py
-install -m 644 check_handle_api.py %{buildroot}%{_libexecdir}/argo/probes/eudat-b2handle/check_handle_api.py
+%py_byte_compile %{__python3} %{buildroot}%{_libexecdir}/argo/probes/eudat-b2handle/epicclient.py
+%endif
 
 %files
 %dir /%{_libexecdir}/argo
@@ -45,15 +50,22 @@ install -m 644 check_handle_api.py %{buildroot}%{_libexecdir}/argo/probes/eudat-
 %dir /%{_libexecdir}/argo/probes/eudat-b2handle
 
 %attr(0755,root,root) /%{_libexecdir}/argo/probes/eudat-b2handle/check_handle_resolution.pl
+%attr(0755,root,root) /%{_libexecdir}/argo/probes/eudat-b2handle/check_handle_api.py
+%if %{with epicapi}
 %attr(0755,root,root) /%{_libexecdir}/argo/probes/eudat-b2handle/check_epic_api.py
 %attr(0755,root,root) /%{_libexecdir}/argo/probes/eudat-b2handle/epicclient.py
-%attr(0644,root,root) /%{_libexecdir}/argo/probes/eudat-b2handle/epicclient.pyc
-%attr(0644,root,root) /%{_libexecdir}/argo/probes/eudat-b2handle/epicclient.pyo
-%attr(0755,root,root) /%{_libexecdir}/argo/probes/eudat-b2handle/check_handle_api.py
+%attr(0644,root,root) /%{_libexecdir}/argo/probes/eudat-b2handle/__pycache__
+%endif
 
 %pre
 
 %changelog
+* Thu Apr 18 2024 Kyriakos Gkinis <kyrginis@admin.grnet.gr> - 1.0-0
+- Added support for python3
+- Handle API probe uses pyhandle library instead of b2handle
+- Handle API probe prints more debugging output when called with --debug
+- EPIC API probe is optional
+
 * Mon Mar 14 2022 Themis Zamani <themiszamani@gmail.com> - 0.9-4
 - Update package prerequisites based on argo monitoring. 
   

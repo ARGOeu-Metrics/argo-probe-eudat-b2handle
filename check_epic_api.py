@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import argparse
 import sys
@@ -13,7 +13,7 @@ VALUE_ORIG='http://www.' + TEST_SUFFIX + '.com/1'
 VALUE_AFTER='http://www.' + TEST_SUFFIX + '.com/2'
 
 def handler(signum, stack):
-    print "UNKNOWN: Timeout reached, exiting."
+    print("UNKNOWN: Timeout reached, exiting.")
     sys.exit(3)
 
 if __name__ == '__main__':
@@ -58,9 +58,9 @@ if __name__ == '__main__':
             None, TEST_SUFFIX)
 
         if create_result == str(cred.prefix + '/' + TEST_SUFFIX):
-            print "OK: Create handle successful."
+            print("OK: Create handle successful.")
         else:
-            print "CRITICAL: Create handle returned unexpected response."
+            print("CRITICAL: Create handle returned unexpected response.")
             sys.exit(2)
     
         # Read test
@@ -69,9 +69,9 @@ if __name__ == '__main__':
             cred.prefix, 'URL', TEST_SUFFIX)
   
         if read_value == VALUE_ORIG:
-            print "OK: Read handle successful."
+            print("OK: Read handle successful.")
         else:
-            print "CRITICAL: Read handle returned unexpected response."
+            print("CRITICAL: Read handle returned unexpected response.")
             client.deleteHandle(cred.prefix, '', TEST_SUFFIX)
             sys.exit(2)
 
@@ -82,7 +82,7 @@ if __name__ == '__main__':
             cred.prefix, key, VALUE_AFTER, TEST_SUFFIX)
 
         if not modify_result:
-            print "CRITICAL: Modify handle value returned unexpected response."
+            print("CRITICAL: Modify handle value returned unexpected response.")
             client.deleteHandle(cred.prefix, '', TEST_SUFFIX)
             sys.exit(2)
 
@@ -90,11 +90,11 @@ if __name__ == '__main__':
             cred.prefix, key, TEST_SUFFIX)
 
         if get_value_result == VALUE_AFTER:
-            print "OK: Modify handle successful."
+            print("OK: Modify handle successful.")
         else:
-            print "CRITICAL: Modify handle value returned unexpected value."
-            print "Expected : " + VALUE_AFTER
-            print "Returned : " + get_value_result
+            print("CRITICAL: Modify handle value returned unexpected value.")
+            print("Expected : " + VALUE_AFTER)
+            print("Returned : " + get_value_result)
             client.deleteHandle(cred.prefix, '', TEST_SUFFIX)
             sys.exit(2)
 
@@ -103,14 +103,14 @@ if __name__ == '__main__':
         delete_result = client.deleteHandle(cred.prefix, '', TEST_SUFFIX)
 
         if delete_result:
-            print "OK: Delete handle successful."
+            print("OK: Delete handle successful.")
             sys.exit(0)
         else:
-            print "CRITICAL: Delete existing handle returned unexpected response."
+            print("CRITICAL: Delete existing handle returned unexpected response.")
             sys.exit(2)
 
     except Exception as e:
-        print "UNKNOWN: " + e
+        print("UNKNOWN: " + str(e))
         sys.exit(3)
     
 
