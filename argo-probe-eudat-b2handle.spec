@@ -1,6 +1,6 @@
 Name:		argo-probe-eudat-b2handle
-Version:	1.0
-Release:	1%{?dist}
+Version:	1.1
+Release:	0%{?dist}
 Summary:	Monitoring Metrics for B2HANDLE 
 License:	GPLv3+
 Packager:	Kyriakos Gkinis <kyrginis@admin.grnet.gr>
@@ -60,6 +60,9 @@ install -m 644 epicclient.py %{buildroot}%{_libexecdir}/argo/probes/eudat-b2hand
 %pre
 
 %changelog
+* Fri May 2 2025 Kyriakos Gkinis <kyrginis@admin.grnet.gr> - 1.1-0
+- Handle API probe adds UUID string to test handle name
+
 * Thu Apr 18 2024 Kyriakos Gkinis <kyrginis@admin.grnet.gr> - 1.0-0
 - Added support for python3
 - Handle API probe uses pyhandle library instead of b2handle
