@@ -3,7 +3,7 @@ Three nagios probes are available: `check_handle_api.py`, `check_handle_resoluti
 
 ## check_handle_api.py
 
-This plugin is a simple CRUD test of the Handle v8 JSON REST API service on the specified host and the specified prefix. It creates a handle named NAGIOS-{DATE}-{TIME}, and then tries to read it and update it with a new value, and finally tries to delete it.
+This plugin is a simple CRUD test of the Handle v8 JSON REST API service on the specified host and the specified prefix. It creates a handle named NAGIOS-{DATE}-{TIME}-{UUID}, and then tries to read it and update it with a new value, and finally tries to delete it.
 
 It uses the PyHandle library (https://github.com/EUDAT-B2HANDLE/PYHANDLE).
 

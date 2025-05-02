@@ -8,6 +8,7 @@ import sys
 import signal
 import time
 import traceback
+import uuid
 
 from requests.exceptions import SSLError
 from requests.packages.urllib3 import disable_warnings
@@ -17,7 +18,7 @@ from pyhandle.handleclient import PyHandleClient
 import pyhandle.handleexceptions as hdlex
 
 
-TEST_SUFFIX='NAGIOS-' +  time.strftime("%Y%m%d-%H%M%S",time.gmtime())
+TEST_SUFFIX='NAGIOS-' +  time.strftime("%Y%m%d-%H%M%S",time.gmtime()) + str(uuid.uuid4())
 VALUE_ORIG='http://www.' + TEST_SUFFIX + '.com/1'
 VALUE_AFTER='http://www.' + TEST_SUFFIX + '.com/2'
 
